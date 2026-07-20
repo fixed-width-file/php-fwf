@@ -82,3 +82,18 @@ jobs:
           files: coverage.xml
           flags: php${{ matrix.php-version }}
           fail_ci_if_error: false
+
+  publish:
+    name: Notify Packagist on Release
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'release'
+    permissions:
+      contents: read
+
+    steps:
+      - name: Trigger Packagist Update API
+        run: |
+          curl -X POST "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USER }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"repository":{"url":"https://github.com/fixed-width-file/php-fwf"}}'
