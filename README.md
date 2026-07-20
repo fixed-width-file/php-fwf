@@ -2,7 +2,7 @@
 # php-fwf
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.1%2B%20%2F%208.5-blue?logo=php)](https://www.php.net/)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B%20%2F%208.5-blue?logo=php)](https://www.php.net/)
 [![FWF Compliance](https://img.shields.io/badge/FWF_Compliance-5%2F5_cases_passed-brightgreen?logo=github)](https://github.com/fixed-width-file/fwf-compliance-tests)
 [![QA](https://github.com/fixed-width-file/php-fwf/actions/workflows/qa.yml/badge.svg)](https://github.com/fixed-width-file/php-fwf/actions/workflows/qa.yml)
 [![Coverage](https://codecov.io/gh/fixed-width-file/php-fwf/branch/main/graph/badge.svg)](https://codecov.io/gh/fixed-width-file/php-fwf)
