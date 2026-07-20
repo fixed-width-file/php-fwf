@@ -1,0 +1,84 @@
+name: QA & CI
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
+
+      - name: Run Semgrep SAST
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule'
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: p/ci
+
+  test:
+    runs-on: ubuntu-latest
+    needs: quality
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: pcov
+
+      - name: Install Composer Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Fetch compliance test cases
+        run: |
+          mkdir -p tests/fwf-compliance
+          curl -sL "https://github.com/fixed-width-file/fwf-compliance-tests/archive/refs/heads/main.zip" -o compliance.zip
+          unzip -q compliance.zip
+          cp -r fwf-compliance-tests-main/cases tests/fwf-compliance/
+          cp fwf-compliance-tests-main/manifest.json tests/fwf-compliance/
+          rm -rf compliance.zip fwf-compliance-tests-main
+
+      - name: Run PHPUnit Tests with Coverage
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
+
+      - name: Upload coverage to Codecov
+        if: github.event_name == 'push' || github.event_name == 'schedule'
+        uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.xml
+          flags: php${{ matrix.php-version }}
+          fail_ci_if_error: false

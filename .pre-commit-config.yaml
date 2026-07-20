@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: phpunit-pre-push
+        name: PHPUnit Test Pre-Push
+        entry: powershell -Command "& 'C:\\Users\\2080882\\scoop\\shims\\php.exe' vendor/bin/phpunit"
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
