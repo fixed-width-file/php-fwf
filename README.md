@@ -6,6 +6,7 @@
 [![FWF Compliance](https://img.shields.io/badge/FWF_Compliance-5%2F5_cases_passed-brightgreen?logo=github)](https://github.com/fixed-width-file/fwf-compliance-tests)
 [![QA](https://github.com/fixed-width-file/php-fwf/actions/workflows/qa.yml/badge.svg)](https://github.com/fixed-width-file/php-fwf/actions/workflows/qa.yml)
 [![Coverage](https://codecov.io/gh/fixed-width-file/php-fwf/branch/main/graph/badge.svg)](https://codecov.io/gh/fixed-width-file/php-fwf)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://fixed-width-file.github.io/php-fwf/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 **php-fwf** is a fast, type-safe PHP library for parsing, validating, hydrating, and exporting **Fixed Width Files (FWF)**.
@@ -62,6 +63,15 @@ foreach ($reader as $row) {
     echo "Name: {$row['name']} | Age: {$row['age']}\n";
 }
 ```
+
+---
+
+## 📖 phpDocumentor & GitHub Pages
+
+Generated documentation is ready for GitHub Pages publication in the `docs/` directory:
+
+- **Landing Page**: [docs/index.html](docs/index.html)
+- **API Documentation**: [docs/apidocs/index.html](docs/apidocs/index.html)
 
 ---
 
