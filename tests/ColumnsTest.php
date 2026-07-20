@@ -53,6 +53,19 @@ class ColumnsTest extends TestCase
         $this->assertEquals(100.0, $colZeroDecimals->toValue("00100"));
     }
 
+    public function testPositiveDecimalColumnInvalid(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new PositiveDecimalColumn("invalid", 5, -1);
+    }
+
+    public function testPositiveDecimalColumnInvalidString(): void
+    {
+        $col = new PositiveDecimalColumn("price", 6, 2);
+        $this->expectException(\InvalidArgumentException::class);
+        $col->toValue("12.3A");
+    }
+
     public function testDateColumn(): void
     {
         $col = new DateColumn("birthday", "Y-m-d");
@@ -60,7 +73,17 @@ class ColumnsTest extends TestCase
         $dt = $col->toValue("2026-07-20");
         $this->assertEquals("2026-07-20", $dt->format("Y-m-d"));
 
+        $this->assertNull($col->toValue("          "));
+        $this->assertNull($col->toValue("0000000000"));
         $this->assertFalse($col->validate("invalid-date"));
+    }
+
+    public function testDateColumnInvalid(): void
+    {
+        $col = new DateColumn("birthday", "Y-m-d");
+        $this->assertEquals("Y-m-d", $col->getFormat());
+        $this->expectException(\InvalidArgumentException::class);
+        $col->toValue("INVALID_DATE_STR");
     }
 
     public function testTimeColumn(): void
@@ -69,6 +92,17 @@ class ColumnsTest extends TestCase
         $this->assertEquals("H:i:s", $col->getFormat());
         $dt = $col->toValue("14:30:00");
         $this->assertEquals("14:30:00", $dt->format("H:i:s"));
+
+        $this->assertNull($col->toValue("        "));
+        $this->assertNull($col->toValue("00000000"));
+    }
+
+    public function testTimeColumnInvalid(): void
+    {
+        $col = new TimeColumn("start_time", "H:i:s");
+        $this->assertEquals("H:i:s", $col->getFormat());
+        $this->expectException(\InvalidArgumentException::class);
+        $col->toValue("INVALID_TIME_STR");
     }
 
     public function testDateTimeColumn(): void
@@ -77,6 +111,17 @@ class ColumnsTest extends TestCase
         $this->assertEquals("Y-m-d H:i:s", $col->getFormat());
         $dt = $col->toValue("2026-07-20 14:30:00");
         $this->assertEquals("2026-07-20 14:30:00", $dt->format("Y-m-d H:i:s"));
+
+        $this->assertNull($col->toValue("                   "));
+        $this->assertNull($col->toValue("0000000000000000000"));
+    }
+
+    public function testDateTimeColumnInvalid(): void
+    {
+        $col = new DateTimeColumn("created_at", "Y-m-d H:i:s");
+        $this->assertEquals("Y-m-d H:i:s", $col->getFormat());
+        $this->expectException(\InvalidArgumentException::class);
+        $col->toValue("INVALID_DATETIME_STR");
     }
 
     public function testInvalidSize(): void
