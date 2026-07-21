@@ -27,7 +27,7 @@ class HydrateUtils
         'pyfwf.descriptors.RowDescriptor' => \Kelsoncm\Fwf\Descriptors\RowDescriptor::class,
         'pyfwf.descriptors.FileDescriptor' => \Kelsoncm\Fwf\Descriptors\FileDescriptor::class,
 
-        // Java class names
+        // Java class names (legacy and io.github.kelsoncm)
         'com.kelsoncm.fwf.columns.CharColumn' => \Kelsoncm\Fwf\Columns\CharColumn::class,
         'com.kelsoncm.fwf.columns.RightCharColumn' => \Kelsoncm\Fwf\Columns\RightCharColumn::class,
         'com.kelsoncm.fwf.columns.PositiveIntegerColumn' => \Kelsoncm\Fwf\Columns\PositiveIntegerColumn::class,
@@ -40,6 +40,19 @@ class HydrateUtils
         'com.kelsoncm.fwf.descriptors.FooterRowDescriptor' => \Kelsoncm\Fwf\Descriptors\FooterRowDescriptor::class,
         'com.kelsoncm.fwf.descriptors.RowDescriptor' => \Kelsoncm\Fwf\Descriptors\RowDescriptor::class,
         'com.kelsoncm.fwf.descriptors.FileDescriptor' => \Kelsoncm\Fwf\Descriptors\FileDescriptor::class,
+
+        'io.github.kelsoncm.fwf.columns.CharColumn' => \Kelsoncm\Fwf\Columns\CharColumn::class,
+        'io.github.kelsoncm.fwf.columns.RightCharColumn' => \Kelsoncm\Fwf\Columns\RightCharColumn::class,
+        'io.github.kelsoncm.fwf.columns.PositiveIntegerColumn' => \Kelsoncm\Fwf\Columns\PositiveIntegerColumn::class,
+        'io.github.kelsoncm.fwf.columns.PositiveDecimalColumn' => \Kelsoncm\Fwf\Columns\PositiveDecimalColumn::class,
+        'io.github.kelsoncm.fwf.columns.DateColumn' => \Kelsoncm\Fwf\Columns\DateColumn::class,
+        'io.github.kelsoncm.fwf.columns.TimeColumn' => \Kelsoncm\Fwf\Columns\TimeColumn::class,
+        'io.github.kelsoncm.fwf.columns.DateTimeColumn' => \Kelsoncm\Fwf\Columns\DateTimeColumn::class,
+        'io.github.kelsoncm.fwf.descriptors.HeaderRowDescriptor' => \Kelsoncm\Fwf\Descriptors\HeaderRowDescriptor::class,
+        'io.github.kelsoncm.fwf.descriptors.DetailRowDescriptor' => \Kelsoncm\Fwf\Descriptors\DetailRowDescriptor::class,
+        'io.github.kelsoncm.fwf.descriptors.FooterRowDescriptor' => \Kelsoncm\Fwf\Descriptors\FooterRowDescriptor::class,
+        'io.github.kelsoncm.fwf.descriptors.RowDescriptor' => \Kelsoncm\Fwf\Descriptors\RowDescriptor::class,
+        'io.github.kelsoncm.fwf.descriptors.FileDescriptor' => \Kelsoncm\Fwf\Descriptors\FileDescriptor::class,
 
         // Short names
         'CharColumn' => \Kelsoncm\Fwf\Columns\CharColumn::class,
