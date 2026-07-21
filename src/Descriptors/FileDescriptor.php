@@ -4,7 +4,7 @@ namespace Kelsoncm\Fwf\Descriptors;
 
 class FileDescriptor
 {
-    public static array $hydratingArgs = ['details', 'header', 'footer', 'line_size'];
+
 
     protected ?HeaderRowDescriptor $header;
     /** @var array<DetailRowDescriptor> */

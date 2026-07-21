@@ -6,7 +6,7 @@ use Kelsoncm\Fwf\Columns\AbstractColumn;
 
 class RowDescriptor
 {
-    public static array $hydratingArgs = ['columns'];
+
 
     /** @var array<AbstractColumn> */
     protected array $columns;

@@ -4,7 +4,7 @@ namespace Kelsoncm\Fwf\Columns;
 
 abstract class AbstractColumn
 {
-    public static array $hydratingArgs = ['name', 'size', 'description'];
+
 
     protected string $name;
     protected int $size;

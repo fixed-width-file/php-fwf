@@ -3,8 +3,18 @@
 namespace Kelsoncm\Fwf\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Kelsoncm\Fwf\Columns\AbstractColumn;
+use Kelsoncm\Fwf\Columns\CharColumn;
+use Kelsoncm\Fwf\Columns\RightCharColumn;
+use Kelsoncm\Fwf\Columns\PositiveIntegerColumn;
+use Kelsoncm\Fwf\Columns\PositiveDecimalColumn;
+use Kelsoncm\Fwf\Columns\DateColumn;
+use Kelsoncm\Fwf\Columns\TimeColumn;
+use Kelsoncm\Fwf\Columns\DateTimeColumn;
 use Kelsoncm\Fwf\Descriptors\FileDescriptor;
-use Kelsoncm\Fwf\Hydrating\HydrateUtils;
+use Kelsoncm\Fwf\Descriptors\DetailRowDescriptor;
+use Kelsoncm\Fwf\Descriptors\HeaderRowDescriptor;
+use Kelsoncm\Fwf\Descriptors\FooterRowDescriptor;
 use Kelsoncm\Fwf\Readers\Reader;
 
 class ComplianceTest extends TestCase
@@ -39,8 +49,7 @@ class ComplianceTest extends TestCase
             $descriptorJson = file_get_contents($casePath . '/descriptor.json');
             $descriptorMap = json_decode($descriptorJson, true);
 
-            /** @var FileDescriptor $fileDescriptor */
-            $fileDescriptor = HydrateUtils::hydrateObject($descriptorMap);
+            $fileDescriptor = $this->buildFileDescriptor($descriptorMap);
             $this->assertInstanceOf(FileDescriptor::class, $fileDescriptor);
 
             $inputContent = file_get_contents($casePath . '/input.fwf');
@@ -93,5 +102,47 @@ class ComplianceTest extends TestCase
                 }
             }
         }
+    }
+
+    private function buildColumn(array $colDef): AbstractColumn
+    {
+        $cType = $colDef['type'] ?? 'char';
+        $name = $colDef['name'] ?? '';
+        $desc = $colDef['description'] ?? $name;
+        $size = $colDef['size'] ?? 0;
+
+        return match ($cType) {
+            'char' => new CharColumn($name, $size, $desc),
+            'right_char' => new RightCharColumn($name, $size, $desc),
+            'positive_integer' => new PositiveIntegerColumn($name, $size, $desc),
+            'positive_decimal' => new PositiveDecimalColumn($name, $size, $colDef['decimals'] ?? 2, $desc),
+            'date' => new DateColumn($name, $colDef['format'] ?? '%d%m%Y', $desc),
+            'time' => new TimeColumn($name, $colDef['format'] ?? '%H%M', $desc),
+            'datetime' => new DateTimeColumn($name, $colDef['format'] ?? '%d%m%Y%H%M', $desc),
+            default => throw new \InvalidArgumentException("Unknown column type: {$cType}"),
+        };
+    }
+
+    private function buildFileDescriptor(array $data): FileDescriptor
+    {
+        $header = null;
+        if (!empty($data['header'])) {
+            $cols = array_map(fn($c) => $this->buildColumn($c), $data['header']['columns']);
+            $header = new HeaderRowDescriptor($cols);
+        }
+
+        $footer = null;
+        if (!empty($data['footer'])) {
+            $cols = array_map(fn($c) => $this->buildColumn($c), $data['footer']['columns']);
+            $footer = new FooterRowDescriptor($cols);
+        }
+
+        $details = [];
+        foreach ($data['details'] as $d) {
+            $cols = array_map(fn($c) => $this->buildColumn($c), $d['columns']);
+            $details[] = new DetailRowDescriptor($cols);
+        }
+
+        return new FileDescriptor($details, $header, $footer);
     }
 }

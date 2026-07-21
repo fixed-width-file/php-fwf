@@ -9,7 +9,7 @@
 [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://fixed-width-file.github.io/php-fwf/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
-**php-fwf** is a fast, type-safe PHP library for parsing, validating, hydrating, and exporting **Fixed Width Files (FWF)**.
+**php-fwf** is a fast, type-safe PHP library for parsing, validating, and exporting **Fixed Width Files (FWF)**.
 
 It is part of the [Fixed Width File Ecosystem](https://fixed-width-file.github.io/) and fully implements the **[fwf-compliance-tests v1.0.0](https://github.com/fixed-width-file/fwf-compliance-tests)** specification.
 
@@ -19,7 +19,6 @@ It is part of the [Fixed Width File Ecosystem](https://fixed-width-file.github.i
 
 - **Type-Safe Columns**: `CharColumn`, `RightCharColumn`, `PositiveIntegerColumn`, `PositiveDecimalColumn`, `DateColumn`, `TimeColumn`, and `DateTimeColumn`.
 - **Flexible Descriptors**: Structured records with `HeaderRowDescriptor`, `DetailRowDescriptor`, and `FooterRowDescriptor`.
-- **Cross-Language Hydration**: Dehydrate/Hydrate descriptors to/from JSON representations compatible with Python `pyfwf` and Java `java-fwf`.
 - **Multiple Output Renders**: Export layout specifications to Markdown, ReStructuredText (RST), or HTML tables via `RenderUtils`.
 - **Full Test Suite & Compliance**: 100% compliant with `fwf-compliance-tests` v1.0.0.
 - **Git Hooks Ready**: Pre-configured `pre-commit` and `pre-push` hooks.

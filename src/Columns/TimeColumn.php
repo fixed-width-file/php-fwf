@@ -4,7 +4,7 @@ namespace Kelsoncm\Fwf\Columns;
 
 class TimeColumn extends AbstractColumn
 {
-    public static array $hydratingArgs = ['name', 'format', 'description'];
+
 
     protected string $format;
 

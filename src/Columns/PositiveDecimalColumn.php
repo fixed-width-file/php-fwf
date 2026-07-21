@@ -4,7 +4,7 @@ namespace Kelsoncm\Fwf\Columns;
 
 class PositiveDecimalColumn extends AbstractColumn
 {
-    public static array $hydratingArgs = ['name', 'size', 'decimals', 'description'];
+
 
     protected int $decimals;
 
